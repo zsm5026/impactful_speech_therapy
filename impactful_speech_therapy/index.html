@@ -445,7 +445,7 @@
             <div class="nav-inner">
                 <a href="#" data-page="home" class="active">Home</a>
                 <a href="#" data-page="about">About</a>
-                <a href="#" data-page="blog">Blog</a>
+                <a href="/blog/">Blog</a>
                 <a href="#" data-page="services">Services</a>
                 <a href="#" data-page="contact">Contact</a>
                 <a href="#" class="nav-schedule" onclick="event.preventDefault(); window.open(SIMPLEPRACTICE_URL, '_blank')">Schedule Appointment</a>
@@ -681,13 +681,13 @@ function loadPage(name) {
     if (!page) { document.getElementById('app-content').innerHTML = '<div class="page"><div class="page-hero"><h1>Page not found</h1></div></div>'; return; }
     document.getElementById('app-content').innerHTML = page.render();
     document.title = page.title + ' | Impactful Speech Therapy and Coaching LLC';
-    document.querySelectorAll('.nav-inner a').forEach(a => {
+    document.querySelectorAll('.nav-inner a[data-page]').forEach(a => {
         a.classList.toggle('active', a.dataset.page === name);
     });
     window.scrollTo(0, 0);
 }
 
-document.querySelectorAll('.nav-inner a').forEach(a => {
+document.querySelectorAll('.nav-inner a[data-page]').forEach(a => {
     a.addEventListener('click', e => { e.preventDefault(); loadPage(a.dataset.page); });
 });
 
