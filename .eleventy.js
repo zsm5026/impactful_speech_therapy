@@ -8,6 +8,11 @@ module.exports = function (eleventyConfig) {
     });
   });
 
+  eleventyConfig.addCollection("post", (collectionApi) => {
+    const now = new Date();
+    return collectionApi.getFilteredByTag("post").filter(post => post.date <= now);
+  });
+
   return {
     dir: {
       input: "src",
