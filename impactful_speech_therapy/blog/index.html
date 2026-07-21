@@ -130,6 +130,72 @@
 
         p.body { font-size: 16px; line-height: 1.7; color: var(--gray-600); margin-bottom: 1rem; }
 
+        /* ── Blog filters ── */
+        .blog-filters {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1.5rem;
+            background: var(--white);
+            border: 1px solid var(--gray-100);
+            border-radius: 10px;
+            padding: 1.1rem 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+        .filter-group { display: flex; align-items: center; gap: .65rem; flex-wrap: wrap; }
+        .filter-label { font-size: 13px; font-weight: 600; color: var(--gray-800); white-space: nowrap; }
+        .pill-row { display: flex; flex-wrap: wrap; gap: .5rem; }
+        .filter-pill {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--secondary);
+            background: var(--secondary-light);
+            border: 1px solid transparent;
+            border-radius: 100px;
+            padding: .35rem .9rem;
+            cursor: pointer;
+            transition: background .2s, color .2s;
+        }
+        .filter-pill:hover { background: #c3e0ef; }
+        .filter-pill.active { background: var(--secondary); color: #fff; }
+        .tag-select {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: var(--gray-800);
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 6px;
+            padding: .4rem .7rem;
+            cursor: pointer;
+        }
+        .tag-select:focus { outline: none; border-color: var(--secondary); }
+        .clear-filters {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--tertiary-dark);
+            background: var(--tertiary-light);
+            border: none;
+            border-radius: 100px;
+            padding: .4rem 1rem;
+            cursor: pointer;
+            margin-left: auto;
+            transition: background .2s;
+        }
+        .clear-filters:hover { background: var(--coral-200); }
+        .filter-count { font-size: 13px; color: var(--gray-600); margin: .75rem 0 -0.25rem; min-height: 1em; }
+        .empty-state {
+            font-size: 15px;
+            color: var(--gray-600);
+            text-align: center;
+            padding: 2.5rem 1rem;
+            background: var(--white);
+            border: 1px dashed var(--gray-200);
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+
         .blog-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -156,8 +222,31 @@
         }
         .blog-body { padding: 1.25rem 1.5rem; }
         .blog-meta { font-size: 12px; color: var(--gray-400); margin-bottom: .4rem; }
+        .blog-category {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .02em;
+            text-transform: uppercase;
+            color: var(--accent-green);
+            background: var(--teal-50);
+            padding: 2px 9px;
+            border-radius: 100px;
+            margin-bottom: .5rem;
+        }
         .blog-card h3 { font-size: 16px; font-weight: 600; color: var(--gray-800); margin-bottom: .5rem; line-height: 1.35; }
         .blog-card p { font-size: 14px; color: var(--gray-600); line-height: 1.6; }
+        .blog-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .6rem; }
+        .tag-pill {
+            font-size: 11px;
+            color: var(--secondary);
+            background: var(--secondary-light);
+            padding: 2px 8px;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: background .2s, color .2s;
+        }
+        .tag-pill:hover { background: var(--secondary); color: #fff; }
         .blog-read { font-size: 13px; font-weight: 500; color: var(--secondary); margin-top: .75rem; display: inline-block; }
 
         .post-body { font-size: 16px; line-height: 1.75; color: var(--gray-800); }
@@ -183,6 +272,8 @@
             .page-hero h1 { font-size: 1.75rem; }
             .top-bar { font-size: 12px; gap: 1rem; }
             .brand { padding: 1rem 1rem .5rem; }
+            .blog-filters { flex-direction: column; align-items: stretch; }
+            .clear-filters { margin-left: 0; align-self: flex-start; }
         }
     </style>
 </head>
@@ -217,8 +308,109 @@
         <h1>Blog &amp; Resources</h1>
         <p>Practical tips, research insights, and stories from the world of speech therapy and professional communication.</p>
     </div>
-    <div class="blog-grid">
-        <a class="blog-card" href="/posts/my-first-post/">
+    <div class="blog-filters">
+        <div class="filter-group">
+            <span class="filter-label">Category:</span>
+            <div class="pill-row" id="categoryPills">
+                <button type="button" class="filter-pill active" data-category="all">All</button>
+                <button type="button" class="filter-pill" data-category="Accent Modification">Accent Modification</button>
+                <button type="button" class="filter-pill" data-category="Active Listening">Active Listening</button>
+                <button type="button" class="filter-pill" data-category="Communication Breakdown">Communication Breakdown</button>
+                <button type="button" class="filter-pill" data-category="Effective Communication">Effective Communication</button>
+                <button type="button" class="filter-pill" data-category="Executive Function">Executive Function</button>
+                <button type="button" class="filter-pill" data-category="Nonverbal Communcation">Nonverbal Communcation</button>
+                <button type="button" class="filter-pill" data-category="Stuttering">Stuttering</button>
+                <button type="button" class="filter-pill" data-category="Voice">Voice</button>
+            </div>
+        </div>
+        <div class="filter-group">
+            <label class="filter-label" for="tagSelect">Topic:</label>
+            <select id="tagSelect" class="tag-select">
+                <option value="all">All topics</option>
+                <option value="accent modification">accent modification</option>
+                <option value="accent reduction">accent reduction</option>
+                <option value="accent refinement">accent refinement</option>
+                <option value="accents">accents</option>
+                <option value="acid reflux">acid reflux</option>
+                <option value="Active listening">Active listening</option>
+                <option value="attentiveness">attentiveness</option>
+                <option value="body language">body language</option>
+                <option value="building confidence">building confidence</option>
+                <option value="clarification questions">clarification questions</option>
+                <option value="clarity">clarity</option>
+                <option value="clear communication">clear communication</option>
+                <option value="clear speech">clear speech</option>
+                <option value="clear voice">clear voice</option>
+                <option value="communication">communication</option>
+                <option value="communication breakdown">communication breakdown</option>
+                <option value="communication repair">communication repair</option>
+                <option value="communication strategies">communication strategies</option>
+                <option value="concise communication">concise communication</option>
+                <option value="concise speech">concise speech</option>
+                <option value="confidence">confidence</option>
+                <option value="confident communication">confident communication</option>
+                <option value="confident speaker">confident speaker</option>
+                <option value="consistency">consistency</option>
+                <option value="daily living">daily living</option>
+                <option value="disfluency">disfluency</option>
+                <option value="dysphagia">dysphagia</option>
+                <option value="effective communication">effective communication</option>
+                <option value="esophagus issues">esophagus issues</option>
+                <option value="executive function skills">executive function skills</option>
+                <option value="eye contact">eye contact</option>
+                <option value="facial expressions">facial expressions</option>
+                <option value="fluency strategies">fluency strategies</option>
+                <option value="gentle starts">gentle starts</option>
+                <option value="GERD">GERD</option>
+                <option value="gestures">gestures</option>
+                <option value="growth">growth</option>
+                <option value="intonation">intonation</option>
+                <option value="leadership">leadership</option>
+                <option value="list">list</option>
+                <option value="listening">listening</option>
+                <option value="maintaining attention">maintaining attention</option>
+                <option value="networking">networking</option>
+                <option value="nonverbal communication">nonverbal communication</option>
+                <option value="organization strategies">organization strategies</option>
+                <option value="organizing">organizing</option>
+                <option value="pacing">pacing</option>
+                <option value="pausing">pausing</option>
+                <option value="presenting">presenting</option>
+                <option value="prioritizing">prioritizing</option>
+                <option value="professional">professional</option>
+                <option value="progress">progress</option>
+                <option value="self advocacy">self advocacy</option>
+                <option value="self-compassion">self-compassion</option>
+                <option value="simple">simple</option>
+                <option value="social skills">social skills</option>
+                <option value="speaking">speaking</option>
+                <option value="speech">speech</option>
+                <option value="speech production">speech production</option>
+                <option value="speech therapy">speech therapy</option>
+                <option value="strategies">strategies</option>
+                <option value="strategies for articulation">strategies for articulation</option>
+                <option value="stressed syllables">stressed syllables</option>
+                <option value="stuttering">stuttering</option>
+                <option value="swallow disorders">swallow disorders</option>
+                <option value="thought organization">thought organization</option>
+                <option value="thoughtfulness">thoughtfulness</option>
+                <option value="timing">timing</option>
+                <option value="tips">tips</option>
+                <option value="tone of voice">tone of voice</option>
+                <option value="top10">top10</option>
+                <option value="vocal hygiene">vocal hygiene</option>
+                <option value="voice">voice</option>
+                <option value="voice strategies">voice strategies</option>
+            </select>
+        </div>
+        <button type="button" id="clearFilters" class="clear-filters" hidden>Clear filters ✕</button>
+    </div>
+    <p class="filter-count" id="filterCount"></p>
+    <div class="blog-grid" id="blogGrid">
+        <a class="blog-card"
+           href="/posts/my-first-post/"
+           data-categories=""
+           data-tags="">
             <div class="blog-thumb">📝</div>
             <div class="blog-body">
                 <div class="blog-meta">July 19, 2026</div>
@@ -226,8 +418,635 @@
                 <span class="blog-read">Read more →</span>
             </div>
         </a>
+        <a class="blog-card"
+           href="/posts/confident-communication-strategies-that-make-an-impact/"
+           data-categories="Effective Communication"
+           data-tags="clarity,concise communication,confident communication,confident speaker">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">July 15, 2026</div>
+                <span class="blog-category">Effective Communication</span>
+                <h3>Confident Communication Strategies That Make an Impact</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="clarity">clarity</span>
+                    <span class="tag-pill" data-tag="concise communication">concise communication</span>
+                    <span class="tag-pill" data-tag="confident communication">confident communication</span>
+                    <span class="tag-pill" data-tag="confident speaker">confident speaker</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/how-to-repair-a-communication-breakdown/"
+           data-categories="Communication Breakdown"
+           data-tags="communication breakdown,communication repair,communication strategies,effective communication">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">July 1, 2026</div>
+                <span class="blog-category">Communication Breakdown</span>
+                <h3>How to Repair a Communication Breakdown</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="communication breakdown">communication breakdown</span>
+                    <span class="tag-pill" data-tag="communication repair">communication repair</span>
+                    <span class="tag-pill" data-tag="communication strategies">communication strategies</span>
+                    <span class="tag-pill" data-tag="effective communication">effective communication</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/how-to-be-a-better-active-listener/"
+           data-categories="Active Listening"
+           data-tags="Active listening,attentiveness,body language,clarification questions,maintaining attention">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">June 17, 2026</div>
+                <span class="blog-category">Active Listening</span>
+                <h3>How to Be a Better Active Listener</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="Active listening">Active listening</span>
+                    <span class="tag-pill" data-tag="attentiveness">attentiveness</span>
+                    <span class="tag-pill" data-tag="body language">body language</span>
+                    <span class="tag-pill" data-tag="clarification questions">clarification questions</span>
+                    <span class="tag-pill" data-tag="maintaining attention">maintaining attention</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/the-power-of-word-and-sentence-stress-in-communication/"
+           data-categories="Accent Modification"
+           data-tags="accent refinement,intonation,stressed syllables">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">June 3, 2026</div>
+                <span class="blog-category">Accent Modification</span>
+                <h3>The Power of Word and Sentence Stress in Communication</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="accent refinement">accent refinement</span>
+                    <span class="tag-pill" data-tag="intonation">intonation</span>
+                    <span class="tag-pill" data-tag="stressed syllables">stressed syllables</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/finding-your-authentic-voice/"
+           data-categories="Voice"
+           data-tags="clear communication,clear voice,voice,voice strategies">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">May 20, 2026</div>
+                <span class="blog-category">Voice</span>
+                <h3>Finding Your Authentic Voice</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="clear communication">clear communication</span>
+                    <span class="tag-pill" data-tag="clear voice">clear voice</span>
+                    <span class="tag-pill" data-tag="voice">voice</span>
+                    <span class="tag-pill" data-tag="voice strategies">voice strategies</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/what-is-stuttering/"
+           data-categories="Stuttering"
+           data-tags="disfluency,fluency strategies,stuttering">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">May 6, 2026</div>
+                <span class="blog-category">Stuttering</span>
+                <h3>What Is Stuttering?</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="disfluency">disfluency</span>
+                    <span class="tag-pill" data-tag="fluency strategies">fluency strategies</span>
+                    <span class="tag-pill" data-tag="stuttering">stuttering</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/tone-of-voice-the-hidden-power-of-nonverbal-communication/"
+           data-categories="Nonverbal Communcation"
+           data-tags="nonverbal communication,tone of voice">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">April 22, 2026</div>
+                <span class="blog-category">Nonverbal Communcation</span>
+                <h3>Tone of Voice: The Hidden Power of Nonverbal Communication</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="nonverbal communication">nonverbal communication</span>
+                    <span class="tag-pill" data-tag="tone of voice">tone of voice</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/flexible-thinking-the-key-to-adaptability/"
+           data-categories="Executive Function"
+           data-tags="executive function skills,organization strategies,thought organization">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">April 8, 2026</div>
+                <span class="blog-category">Executive Function</span>
+                <h3>Flexible Thinking—The Key to Adaptability</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="executive function skills">executive function skills</span>
+                    <span class="tag-pill" data-tag="organization strategies">organization strategies</span>
+                    <span class="tag-pill" data-tag="thought organization">thought organization</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/the-power-of-pausing-in-conversation/"
+           data-categories="Effective Communication"
+           data-tags="concise communication,effective communication,pacing,pausing,thought organization">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">March 25, 2026</div>
+                <span class="blog-category">Effective Communication</span>
+                <h3>The Power of Pausing in Conversation</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="concise communication">concise communication</span>
+                    <span class="tag-pill" data-tag="effective communication">effective communication</span>
+                    <span class="tag-pill" data-tag="pacing">pacing</span>
+                    <span class="tag-pill" data-tag="pausing">pausing</span>
+                    <span class="tag-pill" data-tag="thought organization">thought organization</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/moving-forward-after-miscommunication/"
+           data-categories="Communication Breakdown"
+           data-tags="">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">March 11, 2026</div>
+                <span class="blog-category">Communication Breakdown</span>
+                <h3>Moving Forward After Miscommunication</h3>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/what-is-active-listening-and-why-it-matters/"
+           data-categories="Active Listening"
+           data-tags="Active listening,clear communication,communication,communication breakdown">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">February 25, 2026</div>
+                <span class="blog-category">Active Listening</span>
+                <h3>What Is Active Listening and Why It Matters</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="Active listening">Active listening</span>
+                    <span class="tag-pill" data-tag="clear communication">clear communication</span>
+                    <span class="tag-pill" data-tag="communication">communication</span>
+                    <span class="tag-pill" data-tag="communication breakdown">communication breakdown</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/inside-accent-modification-what-practice-really-looks-like/"
+           data-categories="Accent Modification"
+           data-tags="accent refinement,communication,confident communication,confident speaker">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">February 11, 2026</div>
+                <span class="blog-category">Accent Modification</span>
+                <h3>Inside Accent Modification: What Practice Really Looks Like</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="accent refinement">accent refinement</span>
+                    <span class="tag-pill" data-tag="communication">communication</span>
+                    <span class="tag-pill" data-tag="confident communication">confident communication</span>
+                    <span class="tag-pill" data-tag="confident speaker">confident speaker</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/progress-over-perfection-always/"
+           data-categories=""
+           data-tags="communication,consistency,growth,prioritizing,progress,self-compassion">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">January 29, 2026</div>
+                <h3>Progress over perfection. Always.</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="communication">communication</span>
+                    <span class="tag-pill" data-tag="consistency">consistency</span>
+                    <span class="tag-pill" data-tag="growth">growth</span>
+                    <span class="tag-pill" data-tag="prioritizing">prioritizing</span>
+                    <span class="tag-pill" data-tag="progress">progress</span>
+                    <span class="tag-pill" data-tag="self-compassion">self-compassion</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/everyday-tips-to-communicate-with-confidence-when-you-stutter/"
+           data-categories="Stuttering"
+           data-tags="confident communication,self advocacy,speech therapy,strategies,stuttering">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">January 7, 2026</div>
+                <span class="blog-category">Stuttering</span>
+                <h3>Everyday Tips to Communicate with Confidence When You Stutter</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="confident communication">confident communication</span>
+                    <span class="tag-pill" data-tag="self advocacy">self advocacy</span>
+                    <span class="tag-pill" data-tag="speech therapy">speech therapy</span>
+                    <span class="tag-pill" data-tag="strategies">strategies</span>
+                    <span class="tag-pill" data-tag="stuttering">stuttering</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/accent-modification-finding-your-confident-voice/"
+           data-categories="Accent Modification"
+           data-tags="accent modification,accent reduction,accent refinement">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">December 24, 2025</div>
+                <span class="blog-category">Accent Modification</span>
+                <h3>Accent Modification: Finding Your Confident Voice</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="accent modification">accent modification</span>
+                    <span class="tag-pill" data-tag="accent reduction">accent reduction</span>
+                    <span class="tag-pill" data-tag="accent refinement">accent refinement</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/eye-contact-the-window-into-nonverbal-communication/"
+           data-categories="Nonverbal Communcation"
+           data-tags="communication,concise communication,confident speaker,effective communication,nonverbal communication,speech therapy">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">December 10, 2025</div>
+                <span class="blog-category">Nonverbal Communcation</span>
+                <h3>Eye Contact: The Window Into Nonverbal Communication</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="communication">communication</span>
+                    <span class="tag-pill" data-tag="concise communication">concise communication</span>
+                    <span class="tag-pill" data-tag="confident speaker">confident speaker</span>
+                    <span class="tag-pill" data-tag="effective communication">effective communication</span>
+                    <span class="tag-pill" data-tag="nonverbal communication">nonverbal communication</span>
+                    <span class="tag-pill" data-tag="speech therapy">speech therapy</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/the-role-of-planning-in-everyday-success/"
+           data-categories="Executive Function"
+           data-tags="daily living,executive function skills,organization strategies,organizing,speech therapy,thought organization">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">November 26, 2025</div>
+                <span class="blog-category">Executive Function</span>
+                <h3>The Role of Planning in Everyday Success</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="daily living">daily living</span>
+                    <span class="tag-pill" data-tag="executive function skills">executive function skills</span>
+                    <span class="tag-pill" data-tag="organization strategies">organization strategies</span>
+                    <span class="tag-pill" data-tag="organizing">organizing</span>
+                    <span class="tag-pill" data-tag="speech therapy">speech therapy</span>
+                    <span class="tag-pill" data-tag="thought organization">thought organization</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/building-confidence-in-conversations/"
+           data-categories="Effective Communication"
+           data-tags="building confidence,communication strategies,concise communication,effective communication,speech therapy">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">November 12, 2025</div>
+                <span class="blog-category">Effective Communication</span>
+                <h3>Building Confidence in Conversations</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="building confidence">building confidence</span>
+                    <span class="tag-pill" data-tag="communication strategies">communication strategies</span>
+                    <span class="tag-pill" data-tag="concise communication">concise communication</span>
+                    <span class="tag-pill" data-tag="effective communication">effective communication</span>
+                    <span class="tag-pill" data-tag="speech therapy">speech therapy</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/why-interrupting-is-a-conversation-killer/"
+           data-categories="Communication Breakdown"
+           data-tags="communication breakdown,communication repair,social skills,speech therapy">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">October 29, 2025</div>
+                <span class="blog-category">Communication Breakdown</span>
+                <h3>Why Interrupting Is a Conversation Killer</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="communication breakdown">communication breakdown</span>
+                    <span class="tag-pill" data-tag="communication repair">communication repair</span>
+                    <span class="tag-pill" data-tag="social skills">social skills</span>
+                    <span class="tag-pill" data-tag="speech therapy">speech therapy</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/how-poor-listening-leads-to-big-misunderstandings/"
+           data-categories="Active Listening"
+           data-tags="Active listening,clear communication,communication breakdown,communication repair,speech therapy">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">October 15, 2025</div>
+                <span class="blog-category">Active Listening</span>
+                <h3>How Poor Listening Leads to Big Misunderstandings</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="Active listening">Active listening</span>
+                    <span class="tag-pill" data-tag="clear communication">clear communication</span>
+                    <span class="tag-pill" data-tag="communication breakdown">communication breakdown</span>
+                    <span class="tag-pill" data-tag="communication repair">communication repair</span>
+                    <span class="tag-pill" data-tag="speech therapy">speech therapy</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/voice-and-confidence-in-professional-communication-sounding-like-the-leader-you-are/"
+           data-categories="Effective Communication,Voice"
+           data-tags="confident communication,leadership,networking,presenting,speech,speech therapy,voice">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">October 3, 2025</div>
+                <span class="blog-category">Effective Communication</span>
+                <h3>Voice and Confidence in Professional Communication: Sounding Like the Leader You Are</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="confident communication">confident communication</span>
+                    <span class="tag-pill" data-tag="leadership">leadership</span>
+                    <span class="tag-pill" data-tag="networking">networking</span>
+                    <span class="tag-pill" data-tag="presenting">presenting</span>
+                    <span class="tag-pill" data-tag="speech">speech</span>
+                    <span class="tag-pill" data-tag="speech therapy">speech therapy</span>
+                    <span class="tag-pill" data-tag="voice">voice</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/what-is-accent-modification/"
+           data-categories="Accent Modification"
+           data-tags="accent modification,accents,clear speech,speech production,strategies for articulation">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">September 17, 2025</div>
+                <span class="blog-category">Accent Modification</span>
+                <h3>What is Accent Modification?</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="accent modification">accent modification</span>
+                    <span class="tag-pill" data-tag="accents">accents</span>
+                    <span class="tag-pill" data-tag="clear speech">clear speech</span>
+                    <span class="tag-pill" data-tag="speech production">speech production</span>
+                    <span class="tag-pill" data-tag="strategies for articulation">strategies for articulation</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/nonverbal-communication-more-than-words/"
+           data-categories="Effective Communication"
+           data-tags="effective communication,facial expressions,gestures,nonverbal communication,speech therapy">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">September 7, 2025</div>
+                <span class="blog-category">Effective Communication</span>
+                <h3>Nonverbal Communication: More Than Words</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="effective communication">effective communication</span>
+                    <span class="tag-pill" data-tag="facial expressions">facial expressions</span>
+                    <span class="tag-pill" data-tag="gestures">gestures</span>
+                    <span class="tag-pill" data-tag="nonverbal communication">nonverbal communication</span>
+                    <span class="tag-pill" data-tag="speech therapy">speech therapy</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/what-is-the-difference-between-in-person-speech-therapy-sessions-and-virtual-treatment/"
+           data-categories=""
+           data-tags="">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">September 2, 2025</div>
+                <h3>What is the difference between in-person speech therapy sessions and virtual treatment?</h3>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/finding-your-voice-building-confidence-when-you-stutter/"
+           data-categories="Stuttering"
+           data-tags="communication,confidence,eye contact,gentle starts,pacing,pausing,strategies,stuttering,tips">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">August 17, 2025</div>
+                <span class="blog-category">Stuttering</span>
+                <h3>Finding Your Voice: Building Confidence When You Stutter</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="communication">communication</span>
+                    <span class="tag-pill" data-tag="confidence">confidence</span>
+                    <span class="tag-pill" data-tag="eye contact">eye contact</span>
+                    <span class="tag-pill" data-tag="gentle starts">gentle starts</span>
+                    <span class="tag-pill" data-tag="pacing">pacing</span>
+                    <span class="tag-pill" data-tag="pausing">pausing</span>
+                    <span class="tag-pill" data-tag="strategies">strategies</span>
+                    <span class="tag-pill" data-tag="stuttering">stuttering</span>
+                    <span class="tag-pill" data-tag="tips">tips</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/is-anybody-listening/"
+           data-categories="Effective Communication"
+           data-tags="Active listening,concise communication,effective communication,timing,voice">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">August 12, 2025</div>
+                <span class="blog-category">Effective Communication</span>
+                <h3>Is Anybody Listening?</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="Active listening">Active listening</span>
+                    <span class="tag-pill" data-tag="concise communication">concise communication</span>
+                    <span class="tag-pill" data-tag="effective communication">effective communication</span>
+                    <span class="tag-pill" data-tag="timing">timing</span>
+                    <span class="tag-pill" data-tag="voice">voice</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/understanding-acid-reflux-gerd-what-you-should-know-and-how-my-dog-helped-me-understand-it-even-more/"
+           data-categories=""
+           data-tags="acid reflux,dysphagia,esophagus issues,GERD,swallow disorders">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">August 3, 2025</div>
+                <h3>Understanding Acid Reflux (GERD): What You Should Know—and How My Dog Helped Me Understand It Even More</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="acid reflux">acid reflux</span>
+                    <span class="tag-pill" data-tag="dysphagia">dysphagia</span>
+                    <span class="tag-pill" data-tag="esophagus issues">esophagus issues</span>
+                    <span class="tag-pill" data-tag="GERD">GERD</span>
+                    <span class="tag-pill" data-tag="swallow disorders">swallow disorders</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/using-your-voice-15-essential-tips-for-good-vocal-hygiene/"
+           data-categories=""
+           data-tags="professional,vocal hygiene,voice">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">July 28, 2025</div>
+                <h3>Using Your Voice: 15 Essential Tips for Good Vocal Hygiene</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="professional">professional</span>
+                    <span class="tag-pill" data-tag="vocal hygiene">vocal hygiene</span>
+                    <span class="tag-pill" data-tag="voice">voice</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/top-10-common-mistakes-that-lead-to-breakdowns-in-communication/"
+           data-categories=""
+           data-tags="communication,list,listening,speaking,top10">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">July 11, 2025</div>
+                <h3>Top 10 Common Mistakes That Lead to Breakdowns in Communication</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="communication">communication</span>
+                    <span class="tag-pill" data-tag="list">list</span>
+                    <span class="tag-pill" data-tag="listening">listening</span>
+                    <span class="tag-pill" data-tag="speaking">speaking</span>
+                    <span class="tag-pill" data-tag="top10">top10</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/first-post/"
+           data-categories=""
+           data-tags="">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">July 11, 2025</div>
+                <h3>Advocating For Yourself - Navigating Life After Suffering a Stroke</h3>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
+        <a class="blog-card"
+           href="/posts/be-clear-and-communicate-your-thoughts/"
+           data-categories=""
+           data-tags="clarity,communication,concise speech,simple,thoughtfulness">
+            <div class="blog-thumb">📝</div>
+            <div class="blog-body">
+                <div class="blog-meta">July 11, 2025</div>
+                <h3>Be Clear and Communicate Your Thoughts</h3>
+                <div class="blog-tags">
+                    <span class="tag-pill" data-tag="clarity">clarity</span>
+                    <span class="tag-pill" data-tag="communication">communication</span>
+                    <span class="tag-pill" data-tag="concise speech">concise speech</span>
+                    <span class="tag-pill" data-tag="simple">simple</span>
+                    <span class="tag-pill" data-tag="thoughtfulness">thoughtfulness</span>
+                </div>
+                <span class="blog-read">Read more →</span>
+            </div>
+        </a>
     </div>
+    <p class="empty-state" id="emptyState" hidden>No posts match that filter yet. Try a different category or topic.</p>
 </div>
+<script>
+(function () {
+    const grid = document.getElementById('blogGrid');
+    const cards = Array.from(grid.querySelectorAll('.blog-card'));
+    const categoryPillsWrap = document.getElementById('categoryPills');
+    const tagSelect = document.getElementById('tagSelect');
+    const clearBtn = document.getElementById('clearFilters');
+    const emptyState = document.getElementById('emptyState');
+    const filterCount = document.getElementById('filterCount');
+
+    let activeCategory = 'all';
+    let activeTag = 'all';
+
+    function applyFilters() {
+        let visibleCount = 0;
+        cards.forEach(card => {
+            const cardCategories = (card.dataset.categories || '').split(',').filter(Boolean);
+            const cardTags = (card.dataset.tags || '').split(',').filter(Boolean);
+            const categoryMatch = activeCategory === 'all' || cardCategories.includes(activeCategory);
+            const tagMatch = activeTag === 'all' || cardTags.includes(activeTag);
+            const show = categoryMatch && tagMatch;
+            card.style.display = show ? '' : 'none';
+            if (show) visibleCount++;
+        });
+
+        emptyState.hidden = visibleCount !== 0;
+        clearBtn.hidden = activeCategory === 'all' && activeTag === 'all';
+
+        if (activeCategory === 'all' && activeTag === 'all') {
+            filterCount.textContent = '';
+        } else {
+            filterCount.textContent = visibleCount + (visibleCount === 1 ? ' post found' : ' posts found');
+        }
+    }
+
+    categoryPillsWrap.addEventListener('click', (e) => {
+        const btn = e.target.closest('.filter-pill');
+        if (!btn) return;
+        activeCategory = btn.dataset.category;
+        categoryPillsWrap.querySelectorAll('.filter-pill').forEach(p => p.classList.toggle('active', p === btn));
+        applyFilters();
+    });
+
+    tagSelect.addEventListener('change', () => {
+        activeTag = tagSelect.value;
+        applyFilters();
+    });
+
+    // Clicking a tag pill on a card filters to that tag instead of opening the post.
+    grid.addEventListener('click', (e) => {
+        const pill = e.target.closest('.tag-pill');
+        if (!pill) return;
+        e.preventDefault();
+        e.stopPropagation();
+        activeTag = pill.dataset.tag;
+        tagSelect.value = activeTag;
+        applyFilters();
+        const filtersEl = document.querySelector('.blog-filters');
+        if (filtersEl && filtersEl.scrollIntoView) {
+            filtersEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+
+    clearBtn.addEventListener('click', () => {
+        activeCategory = 'all';
+        activeTag = 'all';
+        tagSelect.value = 'all';
+        categoryPillsWrap.querySelectorAll('.filter-pill').forEach(p => p.classList.toggle('active', p.dataset.category === 'all'));
+        applyFilters();
+    });
+
+    applyFilters();
+})();
+</script>
+
     </main>
 
     <footer>
