@@ -5,6 +5,7 @@
 .env*
 !.env.example
 impactful_speech_therapy/
+.DS_Store
 
 # Eleventy build output (regenerated on every build, not tracked)
 impactful_speech_therapy/
