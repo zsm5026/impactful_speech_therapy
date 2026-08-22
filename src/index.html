@@ -310,36 +310,6 @@
             border-radius: 100px;
         }
 
-        /* ── Blog ── */
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-        .blog-card {
-            background: var(--white);
-            border: 1px solid var(--gray-100);
-            border-radius: 10px;
-            overflow: hidden;
-            transition: box-shadow .2s, transform .2s;
-            cursor: pointer;
-        }
-        .blog-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,.08); transform: translateY(-2px); }
-        .blog-thumb {
-            height: 120px;
-            background: var(--teal-50);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-        }
-        .blog-body { padding: 1.25rem 1.5rem; }
-        .blog-meta { font-size: 12px; color: var(--gray-400); margin-bottom: .4rem; }
-        .blog-card h3 { font-size: 16px; font-weight: 600; color: var(--gray-800); margin-bottom: .5rem; line-height: 1.35; }
-        .blog-card p { font-size: 14px; color: var(--gray-600); line-height: 1.6; }
-        .blog-read { font-size: 13px; font-weight: 500; color: var(--secondary); margin-top: .75rem; display: inline-block; }
-
         /* ── Contact ── */
         .contact-layout {
             display: grid;
@@ -565,36 +535,6 @@ const pages = {
                     <h3>Ongoing education</h3>
                     <p>I stay current with the latest research so your treatment always reflects best-in-class methods.</p>
                 </div>
-            </div>
-        </div>`
-    },
-
-    blog: {
-        title: 'Blog',
-        render: () => `
-        <div class="page">
-            <div class="page-hero">
-                <h1>Blog &amp; Resources</h1>
-                <p>Practical tips, research insights, and stories from the world of speech therapy and professional communication.</p>
-            </div>
-            <div class="blog-grid">
-                ${[
-                    { emoji:'🗣️', date:'May 28, 2026', title:'5 exercises to reduce vocal fatigue on long call days', blurb:'If your voice feels strained after back-to-back meetings, these quick warm-ups can help you protect your vocal cords.', tag:'Voice Health' },
-                    { emoji:'🌐', date:'April 15, 2026', title:'Accent modification vs. accent elimination — what\'s the difference?', blurb:'We clear up common misconceptions and explain what you can realistically expect from accent coaching.', tag:'Accent Coaching' },
-                    { emoji:'🏃', date:'March 3, 2026', title:'How stuttering therapy has evolved in the last decade', blurb:'Newer approaches focus on acceptance alongside fluency. Here\'s what the research says.', tag:'Fluency' },
-                    { emoji:'💼', date:'February 12, 2026', title:'Speaking with authority: communication tips for new managers', blurb:'Leadership often hinges on how you communicate, not just what you say. Speech therapy can help bridge that gap.', tag:'Professional Skills' },
-                    { emoji:'📱', date:'January 8, 2026', title:'Telehealth speech therapy — does it really work?', blurb:'A look at the evidence behind virtual speech therapy sessions, and why many clients prefer it to in-person care.', tag:'Telehealth' },
-                    { emoji:'🧘', date:'December 2, 2025', title:'Breathing techniques that transform public speaking', blurb:'Controlled breathing isn\'t just for calming nerves — it directly shapes how your voice sounds to others.', tag:'Voice &amp; Breath' },
-                ].map(post => `
-                <div class="blog-card">
-                    <div class="blog-thumb">${post.emoji}</div>
-                    <div class="blog-body">
-                        <div class="blog-meta">${post.tag} · ${post.date}</div>
-                        <h3>${post.title}</h3>
-                        <p>${post.blurb}</p>
-                        <span class="blog-read">Read more →</span>
-                    </div>
-                </div>`).join('')}
             </div>
         </div>`
     },
