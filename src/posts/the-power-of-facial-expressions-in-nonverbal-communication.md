@@ -3,7 +3,7 @@ title: "The Power of Facial Expressions in Nonverbal Communication"
 date: 2026-08-12
 layout: layout.html
 tags: post
-categories: ["Nonverbal Communcation"]
+categories: ["Nonverbal Communication"]
 post_tags: ["facial expressions", "nonverbal communication", "reading body language"]
 ---
 

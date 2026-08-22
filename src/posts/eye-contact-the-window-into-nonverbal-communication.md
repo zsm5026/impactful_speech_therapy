@@ -3,7 +3,7 @@ title: "Eye Contact: The Window Into Nonverbal Communication"
 date: 2025-12-10
 layout: layout.html
 tags: post
-categories: ["Nonverbal Communcation"]
+categories: ["Nonverbal Communication"]
 post_tags: ["communication", "concise communication", "confident speaker", "effective communication", "nonverbal communication", "speech therapy"]
 ---
 

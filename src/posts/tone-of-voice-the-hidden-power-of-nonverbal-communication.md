@@ -3,7 +3,7 @@ title: "Tone of Voice: The Hidden Power of Nonverbal Communication"
 date: 2026-04-22
 layout: layout.html
 tags: post
-categories: ["Nonverbal Communcation"]
+categories: ["Nonverbal Communication"]
 post_tags: ["nonverbal communication", "tone of voice"]
 ---
 
