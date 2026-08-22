@@ -39,7 +39,7 @@ permalink: /blog/
            href="{{ post.url }}"
            data-categories="{{ postCategories }}"
            data-tags="{{ postTags }}">
-            <div class="blog-thumb">📝</div>
+            <div class="blog-thumb">{{ post.data.categories[0] | categoryEmoji }}</div>
             <div class="blog-body">
                 <div class="blog-meta">{{ post.date | readableDate }}</div>
                 {%- if post.data.categories.size > 0 %}

@@ -15,6 +15,21 @@ module.exports = function (eleventyConfig) {
     });
   });
 
+  // Category → emoji lookup. Add/edit categories here as the client's
+  // list evolves — this is the ONLY place emojis are defined.
+  const categoryEmojis = {
+    "Voice Health":        "🗣️",
+    "Accent Coaching":     "🌐",
+    "Fluency":             "🏃",
+    "Professional Skills": "💼",
+    "Telehealth":          "📱",
+    "Voice & Breath":      "🧘"
+  };
+
+  eleventyConfig.addFilter("categoryEmoji", (category) => {
+    return categoryEmojis[category] || "📝"; // fallback if unmatched/missing
+  });
+
   eleventyConfig.addCollection("post", (collectionApi) => {
     return getPublishedPosts(collectionApi);
   });
