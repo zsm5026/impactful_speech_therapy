@@ -18,12 +18,14 @@ module.exports = function (eleventyConfig) {
   // Category → emoji lookup. Add/edit categories here as the client's
   // list evolves — this is the ONLY place emojis are defined.
   const categoryEmojis = {
-    "Voice Health":        "🗣️",
-    "Accent Coaching":     "🌐",
-    "Fluency":             "🏃",
-    "Professional Skills": "💼",
-    "Telehealth":          "📱",
-    "Voice & Breath":      "🧘"
+    "Accent Modification":        "🌐",
+    "Active Listening":           "👂",
+    "Communication Breakdown":    "🗯️",
+    "Effective Communication":    "💬",
+    "Executive Function":         "🧠",
+    "Nonverbal Communication":    "🎭",
+    "Stuttering":                 "🔁",
+    "Voice":                      "🎤"
   };
 
   eleventyConfig.addFilter("categoryEmoji", (category) => {
