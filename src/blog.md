@@ -11,11 +11,11 @@ permalink: /blog/
     </div>
     <div class="blog-filters">
         <div class="filter-group">
-            <span class="filter-label">Category:</span>
-            <div class="pill-row" id="categoryPills">
-                <button type="button" class="filter-pill active" data-category="all">All</button>
+            <span class="filter-label" id="categoryLabel">Category:</span>
+            <div class="pill-row" id="categoryPills" role="group" aria-labelledby="categoryLabel">
+                <button type="button" class="filter-pill active" aria-pressed="true" data-category="all">All</button>
                 {%- for cat in collections.allCategories %}
-                <button type="button" class="filter-pill" data-category="{{ cat }}">{{ cat }}</button>
+                <button type="button" class="filter-pill" aria-pressed="false" data-category="{{ cat }}">{{ cat }}</button>
                 {%- endfor %}
             </div>
         </div>
@@ -30,32 +30,35 @@ permalink: /blog/
         </div>
         <button type="button" id="clearFilters" class="clear-filters" hidden>Clear filters ✕</button>
     </div>
-    <p class="filter-count" id="filterCount"></p>
+    <p class="filter-count" id="filterCount" role="status" aria-live="polite"></p>
     <div class="blog-grid" id="blogGrid">
         {%- for post in collections.post reversed %}
         {%- assign postCategories = post.data.categories | join: ',' %}
         {%- assign postTags = post.data.post_tags | join: ',' %}
-        <a class="blog-card"
-           href="{{ post.url }}"
-           data-categories="{{ postCategories }}"
-           data-tags="{{ postTags }}">
-            <div class="blog-thumb">{{ post.data.categories[0] | categoryEmoji }}</div>
+        <div class="blog-card"
+             data-categories="{{ postCategories }}"
+             data-tags="{{ postTags }}">
+            <a class="blog-card-cover-link" href="{{ post.url }}" tabindex="-1" aria-hidden="true">
+                <div class="blog-thumb" aria-hidden="true">{{ post.data.categories[0] | categoryEmoji }}</div>
+            </a>
             <div class="blog-body">
                 <div class="blog-meta">{{ post.date | readableDate }}</div>
                 {%- if post.data.categories.size > 0 %}
                 <span class="blog-category">{{ post.data.categories[0] }}</span>
                 {%- endif %}
-                <h3>{{ post.data.title }}</h3>
+                <h3><a class="blog-title-link" href="{{ post.url }}">{{ post.data.title }}</a></h3>
                 {%- if post.data.post_tags.size > 0 %}
                 <div class="blog-tags">
                     {%- for tag in post.data.post_tags %}
-                    <span class="tag-pill" data-tag="{{ tag }}">{{ tag }}</span>
+                    <button type="button" class="tag-pill" data-tag="{{ tag }}">
+                        {{ tag }}<span class="visually-hidden"> — filter by this topic</span>
+                    </button>
                     {%- endfor %}
                 </div>
                 {%- endif %}
-                <span class="blog-read">Read more →</span>
+                <a class="blog-read" href="{{ post.url }}">Read more<span class="visually-hidden"> about {{ post.data.title }}</span> →</a>
             </div>
-        </a>
+        </div>
         {%- endfor %}
     </div>
     <p class="empty-state" id="emptyState" hidden>No posts match that filter yet. Try a different category or topic.</p>
@@ -100,7 +103,11 @@ permalink: /blog/
         const btn = e.target.closest('.filter-pill');
         if (!btn) return;
         activeCategory = btn.dataset.category;
-        categoryPillsWrap.querySelectorAll('.filter-pill').forEach(p => p.classList.toggle('active', p === btn));
+        categoryPillsWrap.querySelectorAll('.filter-pill').forEach(p => {
+            const isActive = p === btn;
+            p.classList.toggle('active', isActive);
+            p.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
         applyFilters();
     });
 
@@ -113,8 +120,6 @@ permalink: /blog/
     grid.addEventListener('click', (e) => {
         const pill = e.target.closest('.tag-pill');
         if (!pill) return;
-        e.preventDefault();
-        e.stopPropagation();
         activeTag = pill.dataset.tag;
         tagSelect.value = activeTag;
         applyFilters();
@@ -128,7 +133,11 @@ permalink: /blog/
         activeCategory = 'all';
         activeTag = 'all';
         tagSelect.value = 'all';
-        categoryPillsWrap.querySelectorAll('.filter-pill').forEach(p => p.classList.toggle('active', p.dataset.category === 'all'));
+        categoryPillsWrap.querySelectorAll('.filter-pill').forEach(p => {
+            const isActive = p.dataset.category === 'all';
+            p.classList.toggle('active', isActive);
+            p.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
         applyFilters();
     });
 
