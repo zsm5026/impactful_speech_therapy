@@ -38,9 +38,7 @@ permalink: /blog/
         <div class="blog-card"
              data-categories="{{ postCategories }}"
              data-tags="{{ postTags }}">
-            <a class="blog-card-cover-link" href="{{ post.url }}" tabindex="-1" aria-hidden="true">
-                <div class="blog-thumb" aria-hidden="true">{{ post.data.categories[0] | categoryEmoji }}</div>
-            </a>
+            <div class="blog-thumb" aria-hidden="true">{{ post.data.categories[0] | categoryEmoji }}</div>
             <div class="blog-body">
                 <div class="blog-meta">{{ post.date | readableDate }}</div>
                 {%- if post.data.categories.size > 0 %}
@@ -58,6 +56,7 @@ permalink: /blog/
                 {%- endif %}
                 <a class="blog-read" href="{{ post.url }}">Read more<span class="visually-hidden"> about {{ post.data.title }}</span> →</a>
             </div>
+            <a class="blog-card-cover-link" href="{{ post.url }}" tabindex="-1" aria-hidden="true"></a>
         </div>
         {%- endfor %}
     </div>
