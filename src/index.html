@@ -906,33 +906,21 @@ function loadPage(name, options) {
     // Move focus into the newly-loaded content so keyboard and screen-reader
     // users land somewhere sensible instead of staying on the (now stale) nav link.
     if (focusMain) {
-        appContent.focus();
+        appContent.focus({ preventScroll: true});
     }
 }
 
+function navigateTo(page) {
+    history.pushState(null, '', '#' + page);
+    loadPage(page, { focusMain: true });
+}
+
 document.querySelectorAll('.nav-inner a[data-page]').forEach(a => {
-    a.addEventListener('click', e => {
-        e.preventDefault();
-        // Keep the URL hash in sync so deep links (e.g. /#about) and the
-        // browser back/forward buttons work correctly.
-        if (window.location.hash !== '#' + a.dataset.page) {
-            window.location.hash = a.dataset.page;
-        } else {
-            loadPage(a.dataset.page, { focusMain: true });
-        }
-    });
+    a.addEventListener('click', e => { e.preventDefault(); navigateTo(a.dataset.page); });
 });
 
-// Also wire up footer "data-page" links since they live outside #app-content
 document.querySelectorAll('footer a[data-page]').forEach(a => {
-    a.addEventListener('click', e => {
-        e.preventDefault();
-        if (window.location.hash !== '#' + a.dataset.page) {
-            window.location.hash = a.dataset.page;
-        } else {
-            loadPage(a.dataset.page, { focusMain: true });
-        }
-    });
+    a.addEventListener('click', e => { e.preventDefault(); navigateTo(a.dataset.page); });
 });
 
 // ── Hash-based routing ──
@@ -946,7 +934,8 @@ function routeFromHash(options) {
     loadPage(page, options);
 }
 
-window.addEventListener('hashchange', () => routeFromHash({ focusMain: true }));
+window.addEventListener('popstate', () => routeFromHash({ focusMain: true }));
+
 
 routeFromHash();
 
