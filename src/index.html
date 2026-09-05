@@ -141,6 +141,7 @@
             transition: background .2s;
         }
         .nav-schedule:hover { background: var(--tertiary-dark) !important; }
+        .nav-toggle{ display: none;}
 
         /* ── CTA Banner ── */
         .cta-banner {
@@ -506,6 +507,10 @@
             outline-offset: 2px;
         }
         .nav-inner a:focus-visible { outline-offset: -3px; }
+        #app-content:focus,
+        #app-content:focus-visible {
+            outline: none;
+        }
 
         /* ── Accessibility: font-size control ── */
         .font-size-control {
@@ -556,7 +561,51 @@
             .brand { padding: 1rem 1rem .5rem; }
             .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
             .font-size-control { margin-left: 0; }
-        }
+
+            .nav-bar {
+                display: flex;
+                justify-content: flex-end;
+                max-width: 1100px;
+                margin: 0 auto;
+                padding: 0 1rem;
+            }
+
+            .nav-toggle {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 5px;
+                background: transparent;
+                border: none;
+                padding: .85rem .5rem;
+                cursor: pointer;
+            }
+
+            .nav-toggle-bar {
+                display: block;
+                width: 24px;
+                height: 3px;
+                background: #fff;
+                border-radius: 2px;
+                transition: transform .2s ease, opacity .2s ease;
+            }
+
+            .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; }
+            .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+            .nav-inner {
+                display: none;
+                flex-direction: column;
+                overflow-x: visible;
+                padding: 0 1rem 1rem;
+            }
+
+            .nav-inner.is-open { display: flex; }
+            .nav-inner a { padding: .9rem 0; border-bottom: 1px solid rgba(255,255,255,.1); }
+            .nav-schedule { margin: .75rem 0 0; text-align: center; }
+            }
+
     </style>
 </head>
 <body>
@@ -583,7 +632,15 @@
             <div class ="brand-statement">Helping you build the skills to communicate, connect, and succeed in everyday life. </div>
         </div>
         <nav aria-label="Primary">
-            <div class="nav-inner">
+            <div class="nav-bar">
+                <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navInner" aria-label="Open menu">
+                    <span class="nav-toggle-bar"></span>
+                    <span class="nav-toggle-bar"></span>
+                    <span class="nav-toggle-bar"></span>
+                </button>
+            </div>
+            </div>
+            <div class="nav-inner" id="navInner">
                 <a href="#" data-page="home" class="active" aria-current="page">Home</a>
                 <a href="#" data-page="about">About</a>
                 <a href="/blog/">Blog</a>
@@ -759,7 +816,7 @@ const pages = {
             <div class="cards">
                 ${[
                     { icon:'🗣️', name:'Social Communication Coaching', desc:'Practical support for navigating conversations, reading social queues, building connections, and communicating more effectively across everyday situations.', tag:'For Teens &amp; Adults' },
-                    { icon:'🌐', name:'Accent Modification Coaching', desc:'Individualized coaching to refine pronunciation and speech patterns while respecting your linguistic background and communication goals.', tag:'Individual &amp; Group' },
+                    { icon:'🌐', name:'Accent Modification Coaching', desc:'Individualized coaching to refine pronunciation and speech patterns while respecting your linguistic background and communication goals.', tag:'For Adults' },
                     { icon:'🗂️', name:'Executive Functioning', desc:'Build practical strategies for organization, planning, time management, problem solving, and follow through', tag:'For Teens &amp; Adults' },
                     { icon:'💼', name:'Professional Communication Coaching', desc:'Personalized coaching to help you communicate clearly, and confidently in meetings, presentations, networking, and everyday professional interactions. ', tag:'For Professionals' },
                     { icon:'🎤', name:'Public Speaking and Presentation Coaching', desc:'Practical coaching to help you organize your message, strengthen your delivery, and communicate with confidence, in presentations and speaking situations. ', tag:'For Professionals' },
@@ -894,6 +951,26 @@ loadPage('home');
     });
 
     applyScale(getScale());
+})();
+
+// ── Accessibility: mobile nav toggle ──
+(function () {
+    var toggle = document.getElementById('navToggle');
+    var navInner = document.getElementById('navInner');
+    if (!toggle || !navInner) return;
+
+    toggle.addEventListener('click', function () {
+        var isOpen = navInner.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    // Close the menu after a link is tapped
+    navInner.addEventListener('click', function (e) {
+        if (e.target.tagName === 'A') {
+            navInner.classList.remove('is-open');
+            toggle.setAttribute('aria-expanded', 'false');
+        }
+    });
 })();
 </script>
 </body>
