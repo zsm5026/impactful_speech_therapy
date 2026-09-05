@@ -911,13 +911,44 @@ function loadPage(name, options) {
 }
 
 document.querySelectorAll('.nav-inner a[data-page]').forEach(a => {
-    a.addEventListener('click', e => { e.preventDefault(); loadPage(a.dataset.page, { focusMain: true }); });
+    a.addEventListener('click', e => {
+        e.preventDefault();
+        // Keep the URL hash in sync so deep links (e.g. /#about) and the
+        // browser back/forward buttons work correctly.
+        if (window.location.hash !== '#' + a.dataset.page) {
+            window.location.hash = a.dataset.page;
+        } else {
+            loadPage(a.dataset.page, { focusMain: true });
+        }
+    });
 });
 
 // Also wire up footer "data-page" links since they live outside #app-content
 document.querySelectorAll('footer a[data-page]').forEach(a => {
-    a.addEventListener('click', e => { e.preventDefault(); loadPage(a.dataset.page, { focusMain: true }); });
+    a.addEventListener('click', e => {
+        e.preventDefault();
+        if (window.location.hash !== '#' + a.dataset.page) {
+            window.location.hash = a.dataset.page;
+        } else {
+            loadPage(a.dataset.page, { focusMain: true });
+        }
+    });
 });
+
+// ── Hash-based routing ──
+// Other pages (like the blog, built with Eleventy) link here using
+// fragments such as /#about, /#services, /#contact. Read the current
+// hash on load and whenever it changes so those links actually land on
+// the right page instead of always showing Home.
+function routeFromHash(options) {
+    const hash = window.location.hash.replace(/^#/, '');
+    const page = pages[hash] ? hash : 'home';
+    loadPage(page, options);
+}
+
+window.addEventListener('hashchange', () => routeFromHash({ focusMain: true }));
+
+routeFromHash();
 
 loadPage('home');
 
