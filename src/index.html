@@ -308,6 +308,7 @@
         .service-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,.08); transform: translateY(-2px); }
         .service-card h3 { font-size: 1rem; font-weight: 600; color: var(--accent-navy); margin-bottom: .4rem; }
         .service-card p { font-size: 0.875rem; color: var(--gray-600); line-height: 1.6; margin-bottom: .75rem; }
+        
         .service-tag {
             display: inline-block;
             background: var(--teal-50);
@@ -316,6 +317,20 @@
             font-weight: 500;
             padding: 3px 10px;
             border-radius: 100px;
+        }
+
+        .services-btn {
+            background: var(--tertiary);
+            color: #fff;
+            border: none;
+            padding: .7rem 2rem;
+            border-radius: 6px;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background .2s;
+            font-family: 'Inter', sans-serif;
+            margin-top: .5rem;
         }
 
         /* ── Contact ── */
@@ -723,7 +738,7 @@ const pages = {
                 <p>We start with what matters to you.  I provide the support, strategies, and expertise to help you communicate with greater confidence in the situations that matter most.</p>
             </div>
 
-            <h2 class="section-title">Why clients choose us</h2>
+            <h2 class="section-title">Why clients choose me</h2>
             <div class="cards">
                 <div class="card">
                     <div class="card-icon" aria-hidden="true">🤝</div>
@@ -819,8 +834,25 @@ const pages = {
         <div class="page">
             <div class="page-hero">
                 <h1>Services</h1>
-                <p>Comprehensive speech therapy and communication coaching for adults — delivered via secure telehealth across four states.</p>
+                <p>Comprehensive speech therapy and communication coaching for teens and adults — delivered via secure telehealth across four states.</p>
             </div>
+            <div class= "card">
+                <h2>Speech Therapy or Coaching?</h2>
+                <div>
+                    <h2 class="section-title">Coaching</h2>
+                    <p class="body">Coaching is a non-clinical, goal-focused service designed to support skill development, practical strategy use, and personal or professional growth.  Coaching does not include diagnosis or treatment of a communication disorder and is not a substitute for healthcare or mental-health treatment.</p>
+                </div>    
+                <div>
+                    <h2 class="section-title">Speech Therapy</h2>
+                    <p class="body">Speech therapy is a clinical service provided by a licensed speech-language pathologist.  It may include evaluation and treatment of communication or cognitive-communication difficulties.  Therapy is provided in accordance with applicable professional and state licensure requirements.</p>
+                </div>
+            
+                <div>
+                    <h3 class = "card-title" style = "color: var(--secondary); margin-top: 2rem;">Not sure which service is right for you?</h3>
+                    <p>We'll talk about your goals and needs before getting started and determine which service is the appropriate fit for you.</p>
+                </div>
+            </div>
+        </div>
             <div class="cards">
                 ${[
                     { icon:'🗣️', name:'Social Communication Coaching', desc:'Practical support for navigating conversations, reading social queues, building connections, and communicating more effectively across everyday situations.', tag:'For Teens &amp; Adults' },
@@ -838,8 +870,21 @@ const pages = {
                 </div>`).join('')}
             </div>
 
-            <div class="accent-strip" style="margin-top:2rem">
-                <p>Not sure which service is right for you? <strong>Schedule a free 15-minute phone consultation</strong> and we'll help you find the best starting point.</p>
+            <div class="card" style="margin-top:2rem;">
+                <h2 class="section-title">Session Options &amp; Rates</h2>
+                <ul style="list-style: disc; padding-left: 1.5rem; margin-top: 1rem; margin-bottom: 1rem;">
+                    <li>30-minute session - $65</li>
+                    <li>45-minute session - $90</li>
+                    <li>60-minute session - $120</li>
+                </ul>
+                <p class="body">Session length and frequency are based on your individual goals and needs.</p>
+                <p class="body">Evaluation and assessment fees vary based on the type and scope of assessment.  Pricing is discussed before scheduling.</p>
+            </div>
+
+
+            <div class="accent-strip" style="margin-top:2rem; text-align:center"
+                <p><strong>Schedule a free 15-minute phone consultation</strong> and we'll help you find the best starting point.</p>
+                <button class="services-btn" onclick="window.open(SIMPLEPRACTICE_URL, '_blank', 'noopener')">Schedule Now<span class="visually-hidden"> (opens in a new window)</span></button>
             </div>
         </div>`
     },
@@ -850,7 +895,7 @@ const pages = {
         <div class="page">
             <div class="page-hero">
                 <h1>Get in Touch</h1>
-                <p>Ready to get started, or want to ask a question first? Here's the best way to reach us.</p>
+                <p>Ready to get started, or want to ask a question first? Here's the best way to reach me.</p>
             </div>
             <div class="contact-layout">
                 <div class="contact-form">
@@ -858,7 +903,7 @@ const pages = {
                     <p class="body">New and existing clients can request an appointment or send a secure message through our HIPAA-compliant client portal. We keep all scheduling and health-related communication off this website and inside that secure system.</p>
                     <button class="submit-btn" onclick="window.open(SIMPLEPRACTICE_URL, '_blank')">Go to Secure Client Portal →</button>
                     <div class="accent-strip" style="margin-top:1.5rem">
-                        <p>Have a general question first — like pricing, insurance, or availability? Call or email us directly using the info to the right.</p>
+                        <p>Have a general question first — like pricing, insurance, or availability? Call or email me directly using the info to the right.</p>
                     </div>
                 </div>
 

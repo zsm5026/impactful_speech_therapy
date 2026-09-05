@@ -7,7 +7,7 @@ permalink: /blog/
 <div class="page">
     <div class="page-hero">
         <h1>Blog &amp; Resources</h1>
-        <p>Practical tips, research insights, and stories from the world of speech therapy and professional communication.</p>
+        <p>Practical tips, strategies, and insights, for stronger communication, greater confidence, and everyday success.</p>
     </div>
     <div class="blog-filters">
         <div class="filter-group">
