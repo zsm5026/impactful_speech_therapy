@@ -60,10 +60,6 @@
             flex-direction: column;
         }
 
-        a {
-            padding: 4px;
-        }
-
         /* ── Top bar ── */
         .top-bar {
             background: var(--primary);
@@ -95,6 +91,7 @@
             color: var(--accent-navy);
             opacity: .75;
             transition: opacity .2s, transform .15s;
+            padding: 4px;
         }
         .social-links a:hover {
             opacity: 1;
@@ -715,7 +712,6 @@
                     <span class="nav-toggle-bar"></span>
                 </button>
             </div>
-            </div>
             <div class="nav-inner" id="navInner">
                 <a href="#" data-page="home" class="active" aria-current="page">Home</a>
                 <a href="#" data-page="about">About</a>
@@ -748,11 +744,11 @@
             <div class="footer-col">
                 <h3>Contact Info</h3>
                 <div class="footer-contact-item">
-                    <span>✉</span>
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2Z"/></svg>
                     <a href="mailto:jessica.turner@impactfulspeechtherapy.com">jessica.turner@impactfulspeechtherapy.com</a>
                 </div>
                 <div class="footer-contact-item">
-                    <span>📞</span>
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M6.62 10.75c1.44-1.05 3.38-1.75 5.38-1.75s3.94.7 5.38 1.75c-.99-.66-2.18-1.05-3.44-1.05-1.26 0-2.45 .39-3.44 1.05zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
                     <a href="tel:9044788700">(904) 478-8700</a>
                 </div>
                 <div class="footer-badge">
@@ -790,6 +786,7 @@ const pages = {
         title: 'Home',
         render: () => `
         <div class="page">
+
             <div class="page-hero">
                 <h1>Clear Communication,<br>Real Confidence</h1>
                 <p>I work with teens, adults and professionals to unlock clearer speech, stronger voices, and greater ease in every conversation — from boardrooms to everyday life.</p>
@@ -914,7 +911,6 @@ const pages = {
                     <p>We'll talk about your goals and needs before getting started and determine which service is the appropriate fit for you.</p>
                 </div>
             </div>
-        </div>
             <div class="cards">
                 ${[
                     { icon:'🗣️', name:'Social Communication Coaching', desc:'Practical support for navigating conversations, reading social cues, building connections, and communicating more effectively across everyday situations.', tag:'For Teens &amp; Adults' },
@@ -944,7 +940,7 @@ const pages = {
             </div>
 
 
-            <div class="accent-strip" style="margin-top:2rem; text-align:center"
+            <div class="accent-strip" style="margin-top:2rem; text-align:center">
                 <p><strong>Schedule a free 15-minute phone consultation</strong> and I'll help you find the best starting point.</p>
                 <button class="services-btn" onclick="window.open(SIMPLEPRACTICE_URL, '_blank', 'noopener')">Schedule Now<span class="visually-hidden"> (opens in a new window)</span></button>
             </div>
@@ -976,7 +972,7 @@ const pages = {
                     </div>
                     <div class="info-card">
                         <h3><span aria-hidden="true">✉️</span> Email</h3>
-                        <p><a href="mailto:jessica.turner@impactfulspeech.com">jessica.turner@impactfulspeech.com</a></p>
+                        <p><a href="mailto:jessica.turner@impactfulspeechtherapy.com">jessica.turner@impactfulspeechtherapy.com</a></p>
                     </div>
                     <div class="info-card">
                         <h3><span aria-hidden="true">🕐</span> Office hours</h3>
