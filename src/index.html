@@ -472,8 +472,17 @@
             margin-bottom: .75rem;
             color: rgba(255,255,255,.65);
         }
-        .footer-contact-item span { opacity: .8; flex-shrink: 0; }
-        .footer-contact-item a { color: rgba(255,255,255,.65); text-decoration: none; }
+        .footer-contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: .5rem;
+            font-size: 0.8438rem;
+            margin-bottom: .75rem;
+            color: rgba(255,255,255,.65);
+            text-decoration: none;
+            transition: color .15s;
+        }
+        .footer-contact-item:hover { color: #fff; }
         .footer-contact-item a:hover { color: #fff; }
         .footer-col {
             min-width: 0;
@@ -743,14 +752,14 @@
 
             <div class="footer-col">
                 <h3>Contact Info</h3>
-                <div class="footer-contact-item">
+                <a class="footer-contact-item" href="mailto:jessica.turner@impactfulspeechtherapy.com">
                     <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2Z"/></svg>
-                    <a href="mailto:jessica.turner@impactfulspeechtherapy.com">jessica.turner@impactfulspeechtherapy.com</a>
-                </div>
-                <div class="footer-contact-item">
-                    <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M6.62 10.75c1.44-1.05 3.38-1.75 5.38-1.75s3.94.7 5.38 1.75c-.99-.66-2.18-1.05-3.44-1.05-1.26 0-2.45 .39-3.44 1.05zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
-                    <a href="tel:9044788700">(904) 478-8700</a>
-                </div>
+                    <span>jessica.turner@impactfulspeechtherapy.com</span>
+                </a>
+                <a class="footer-contact-item" href="tel:9044788700">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2Z"/></svg>
+                    <span>(904) 478-8700</span>
+                </a>
                 <div class="footer-badge">
                     <img src="./Assets/asha-ccc-slp-blk.jpg" alt="ASHA Certificate of Clinical Competence in Speech-Language Pathology (CCC-SLP)">
                 </div>
