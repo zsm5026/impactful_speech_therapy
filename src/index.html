@@ -75,7 +75,7 @@
             flex-wrap: wrap;
             align-items: center;
         }
-        
+
         .top-bar a { color: var(--accent-navy); text-decoration: none; }
         .top-bar span { opacity: .7; margin-right: 4px; font-size: 0.9375rem; vertical-align: -2px; }
 
@@ -900,14 +900,15 @@ const pages = {
             <div class= "card">
                 <h2>Speech Therapy or Coaching?</h2>
                 <div>
-                    <h2 class="section-title">Coaching</h2>
-                    <p class="body">Coaching is a non-clinical, goal-focused service designed to support skill development, practical strategy use, and personal or professional growth.  Coaching does not include diagnosis or treatment of a communication disorder and is not a substitute for healthcare or mental-health treatment.</p>
-                </div>    
-                <div>
                     <h2 class="section-title">Speech Therapy</h2>
                     <p class="body">Speech therapy is a clinical service provided by a licensed speech-language pathologist.  It may include evaluation and treatment of communication or cognitive-communication difficulties.  Therapy is provided in accordance with applicable professional and state licensure requirements.</p>
                 </div>
-            
+
+                <div>
+                    <h2 class="section-title">Coaching</h2>
+                    <p class="body">Coaching is a non-clinical, goal-focused service designed to support skill development, practical strategy use, and personal or professional growth.  Coaching does not include diagnosis or treatment of a communication disorder and is not a substitute for healthcare or mental-health treatment.</p>
+                </div>    
+                
                 <div>
                     <h3 class = "card-title" style = "color: var(--secondary); margin-top: 2rem;">Not sure which service is right for you?</h3>
                     <p>We'll talk about your goals and needs before getting started and determine which service is the appropriate fit for you.</p>
@@ -916,12 +917,12 @@ const pages = {
         </div>
             <div class="cards">
                 ${[
-                    { icon:'🗣️', name:'Social Communication Coaching', desc:'Practical support for navigating conversations, reading social queues, building connections, and communicating more effectively across everyday situations.', tag:'For Teens &amp; Adults' },
+                    { icon:'🗣️', name:'Social Communication Coaching', desc:'Practical support for navigating conversations, reading social cues, building connections, and communicating more effectively across everyday situations.', tag:'For Teens &amp; Adults' },
                     { icon:'🌐', name:'Accent Modification Coaching', desc:'Individualized coaching to refine pronunciation and speech patterns while respecting your linguistic background and communication goals.', tag:'For Adults' },
                     { icon:'🗂️', name:'Executive Functioning', desc:'Build practical strategies for organization, planning, time management, problem solving, and follow through', tag:'For Teens &amp; Adults' },
                     { icon:'💼', name:'Professional Communication Coaching', desc:'Personalized coaching to help you communicate clearly, and confidently in meetings, presentations, networking, and everyday professional interactions. ', tag:'For Professionals' },
                     { icon:'🎤', name:'Public Speaking and Presentation Coaching', desc:'Practical coaching to help you organize your message, strengthen your delivery, and communicate with confidence, in presentations and speaking situations. ', tag:'For Professionals' },
-                    { icon:'📊', name:'Communication Assessments', desc:'Comprehensive evaluations to identify communication strengths, areas for growth, and recommendations for individualized support.', tag:'Available for New Clients' },
+                    { icon:'📊', name:'Communication Assessments', desc:'Comprehensive evaluations to identify communication strengths, areas for growth, and recommendations for individualized support.', tag:'For Teens &amp; Adults' },
                 ].map(s => `
                 <div class="card service-card">
                     <div class="card-icon" aria-hidden="true">${s.icon}</div>
@@ -944,7 +945,7 @@ const pages = {
 
 
             <div class="accent-strip" style="margin-top:2rem; text-align:center"
-                <p><strong>Schedule a free 15-minute phone consultation</strong> and we'll help you find the best starting point.</p>
+                <p><strong>Schedule a free 15-minute phone consultation</strong> and I'll help you find the best starting point.</p>
                 <button class="services-btn" onclick="window.open(SIMPLEPRACTICE_URL, '_blank', 'noopener')">Schedule Now<span class="visually-hidden"> (opens in a new window)</span></button>
             </div>
         </div>`
