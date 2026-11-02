@@ -3,7 +3,7 @@ title: "The Language of Gestures in Nonverbal Communication"
 date: 2026-12-02
 layout: layout.html
 tags: post
-categories: ["Nonverbal Communcation"]
+categories: ["Nonverbal Communication"]
 post_tags: ["body language", "gestures", "nonverbal communication"]
 ---
 

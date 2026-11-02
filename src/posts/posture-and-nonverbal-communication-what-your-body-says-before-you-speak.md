@@ -3,7 +3,7 @@ title: "Posture and Nonverbal Communication: What Your Body Says Before You Spea
 date: 2027-01-27
 layout: layout.html
 tags: post
-categories: ["Nonverbal Communcation"]
+categories: ["Nonverbal Communication"]
 post_tags: ["body language", "nonverbal communication", "posture"]
 ---
 
